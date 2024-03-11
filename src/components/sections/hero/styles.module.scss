@@ -1,0 +1,29 @@
+.sliderText{
+    position: absolute;
+    inset: 0;
+    color: var(--nav-text);
+    display: flex;
+    flex-flow: column-reverse;
+    align-items: center;
+    padding-bottom: 3em;
+    &::before{
+        z-index: 0;
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, #00000000 0%, #00000000 80%, #000000 100%);
+    }
+    h2{
+        font-weight: 600;
+        font-size: 3em;
+        margin-bottom: 0.4em;
+    }
+    a{
+        text-transform: uppercase;
+        &:hover{
+            color: var(--primary-color);
+        }
+    }
+}
+
+  

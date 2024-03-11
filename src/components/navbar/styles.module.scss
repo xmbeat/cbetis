@@ -1,0 +1,35 @@
+.navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &::before{
+        opacity: 1;
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        backdrop-filter: blur(15px);
+        background: var(--nav-bg);
+        transition: opacity 0.3s ease-in-out;
+    }
+    &::after{
+        opacity: 0;
+        content: '';
+        position: absolute;
+        z-index: -1;
+        background: linear-gradient(180deg, #000000e0 0%, #00000052 70%, #00000000 100%);
+        inset: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+    &.big::after{
+        opacity: 1;
+    }
+    &.big::before{
+        opacity: 0;
+    }
+}

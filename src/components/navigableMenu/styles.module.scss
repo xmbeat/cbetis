@@ -1,0 +1,25 @@
+.item{
+    display: flex;
+    padding: 0.8em 1em;
+    align-items: center;
+    cursor: pointer;
+    gap: 1em;
+    min-width: 200px;
+    background-color: var(--nav-subitem-bg);
+    &:hover{
+        background-color: var(--nav-subitem-hover-bg);
+    }
+}
+.header_separator{
+    margin-top: 0.4em;
+    border-bottom: 1px solid var(--nav-subitem-header-separator);
+}
+.container{
+    display: flex;
+    flex-flow: column;
+    border-radius: 0.4em;
+    overflow: hidden;
+    background-color: var(--nav-subitem-bg);
+    padding: 0.4em 0em 0.4em 0em;
+    box-shadow: 1px 1px 10px #0000009c;
+}
