@@ -12,7 +12,7 @@ export interface PopupProps {
   margin?: string,
 }
 
-const Popup: React.FC<PopupProps> = ({ children, isOpen, onClose, desiredAlign = 'right', desiredPosition = 'bottom', desiredWidth = 'same', desiredHeight = '400px', margin = '10px' }) => {
+const Popup: React.FC<PopupProps> = ({ children, isOpen, onClose, desiredAlign = 'right', desiredPosition = 'bottom', desiredWidth = 'same', desiredHeight = '400px', margin = '0px' }) => {
   const popupRef = useRef<HTMLDivElement>(null)
   const [parentRect, setParentRect] = useState({
     top: 0,

@@ -19,7 +19,7 @@ export default function Navbar() {
         <nav 
             className={`${styles.navbar} ${big?styles.big:''}`} 
         >
-            <MaxWidthContainer className="flex h-full w-full px-2 py-2 gap-10 justify-between items-center">
+            <MaxWidthContainer className="flex h-full w-full py-2 gap-10 justify-between items-center">
                 <div className="logo relative" 
                     style={{
                         height: big?'70px':'50px' , transition: 'all ease-in-out 300ms',

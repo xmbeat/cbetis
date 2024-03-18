@@ -1,0 +1,14 @@
+.button{
+    display: flex;
+    background-color: var(--btn-bg);
+    width: fit-content;
+    gap: 1em;
+    padding: 0.4em 1em;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: background-color 0.1s ease-in-out;
+    box-shadow: 1px 1px 5px #00000063;
+    &:hover{
+        background-color: var(--btn-hover-bg);
+    }
+}

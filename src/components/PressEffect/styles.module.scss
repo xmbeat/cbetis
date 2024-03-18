@@ -1,0 +1,19 @@
+
+.container {
+    position: absolute;
+    inset:0;
+    cursor: pointer; /* Para mostrar un cursor de puntero al pasar el ratón */
+}
+
+.circle {
+    position: absolute;
+    background-color: rgba(150, 25, 25, 0.281); /* Color de fondo del círculo */
+    border-radius: 50%; /* Forma de círculo */
+    pointer-events: none; /* Evita que el círculo capture eventos de ratón */
+}
+
+.effectContainer{
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}

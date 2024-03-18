@@ -26,4 +26,9 @@
     }
 }
 
-  
+.imageOverlay{
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.623);
+    backdrop-filter: blur(10px);
+}

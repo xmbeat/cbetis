@@ -1,0 +1,54 @@
+.gridContainer {
+    position: relative;
+    display: grid;
+   
+    grid-template-columns: repeat(3, 1fr); /* 3 elementos por fila por defecto */
+    gap: 1.5em; /* Espacio entre elementos */
+    overflow: visible;
+    .card{
+        background-color: #aa7676;
+        padding: 20px;
+        text-align: center;
+        height: 20vh;
+        min-height: 300px;
+        max-height: 600px;
+        position: relative;
+    }
+    .bgItem{
+        position: absolute;
+        inset: 0;
+        &::after{
+            content: '';
+            position: absolute;
+            inset:0;
+            background-color: #220404af;
+        }
+    }
+    .dataItem{
+        position: absolute;
+        inset: 0;
+        text-align: left;
+        padding: 1em;
+        display: flex;
+        flex-flow: column;
+        color: #fff;
+        .description{
+            flex-grow: 1;
+        }
+        
+    }
+}
+
+
+/* Media Queries para cambiar el número de columnas */
+@media screen and (max-width: 920px) {
+    .gridContainer {
+        grid-template-columns: repeat(2, 1fr); /* 2 elementos por fila para pantallas menores de 720px */
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .gridContainer {
+        grid-template-columns: repeat(1, 1fr); /* 1 elemento por fila para pantallas menores de 600px */
+    }
+}

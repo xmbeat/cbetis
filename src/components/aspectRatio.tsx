@@ -10,7 +10,7 @@ interface IAspectRatioProps {
     forceAspect?: boolean;
 }
 
-export default function AspectRatio({ aspect = 16/9, children, width, height, maxHeight, maxWidth, forceAspect = false }: IAspectRatioProps) {
+export default function AspectRatio({ aspect = 16/9, children, width = '100%', height, maxHeight, maxWidth, forceAspect = false }: IAspectRatioProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [containerStyle, setContainerStyle] = useState<{ }>({});
 

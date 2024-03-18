@@ -3,6 +3,7 @@
 @tailwind utilities;
 :root {
   --primary-color: #a37c0f;
+  --secondary-color: #610c0c;
   --text-color: #242424;
   --nav-bg: rgba(75, 0, 0, 0.637);
   --nav-text: #ffffff;
@@ -12,7 +13,11 @@
   --nav-subitem-header-separator: #bdb03d;
   --nav-subitem-hover-bg: #80610f;
   --bg: #e6e6e6;
+  --btn-bg: var(--primary-color);
+  --btn-hover-bg: rgb(201, 169, 26);
   --btn-disabled-bg: #5c5c5c;
+
+  --px-content: 20px;
 }
 
 
@@ -37,8 +42,21 @@ a {
 
 a:hover{
   color: var(--a-hover-color);
+  cursor: pointer;
 }
-
+h1, h2, h3, h4{
+  font-weight: 600;
+  text-shadow: 1px 1px 2px #0000004b;
+}
+h1{
+  font-size: 2.5;
+}
+h2{
+  font-size: 2.2em;
+}
+h3{
+  font-size: 1.7em;
+}
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

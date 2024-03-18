@@ -17,11 +17,15 @@ export default function Hero() {
     backgroundColor: '#000',
     image:'/images/banner/1.jpg'
   }]
-  return <section className="w-full bg-slate-500">
-    <AspectRatio aspect={16 / 9} maxHeight="80vh" width="100%">
+  return <section className="w-full bg-slate-500 flex justify-center">
+    <AspectRatio aspect={16 / 9} maxHeight="90vh"  width="100%" >
         <Slider>
           {items.map((item, index)=>(
             <div key={index} className="w-full h-full relative" style={{backgroundColor:item.backgroundColor??''}}>
+              {item.image && <div className="w-full h-full absolute">
+                <Image draggable="false" priority={index==0} alt={item.title} src={item.image} fill={true} style={{objectFit:"cover"}}/>
+                <div className={styles.imageOverlay}></div>
+              </div>}
               {item.image && <div className="w-full h-full relative">
                 <Image draggable="false" priority={index==0} alt={item.title} src={item.image} fill={true} style={{objectFit:"contain"}}/>
               </div>}

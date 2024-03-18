@@ -3,6 +3,7 @@ import { IMenuItem } from "../globalMenu";
 import { MdArrowForwardIos, MdArrowBackIos } from "react-icons/md";
 import styles from './styles.module.scss';
 import { motion } from 'framer-motion';
+import PressEffect from "../PressEffect";
 
 interface INavigableMenuNode {
     title?: string;
@@ -58,11 +59,13 @@ export default function NavigableMenu({ items, title }: { items: IMenuItem[]; ti
             >
                 {(tail.parent != null || tail.title) && (
                     <>
-                    <div className={`${styles.item} ${styles.header}`} onClick={handleBack}>
-                        {tail.parent && <MdArrowBackIos />}
-                        <span>{tail.title}</span>
-                    </div>
-                    <div className={styles.header_separator}></div>
+                        
+                        <div className={`${styles.item}`} onClick={handleBack}>
+                        <PressEffect/>
+                            {tail.parent && <MdArrowBackIos />}
+                            <span>{tail.title}</span>
+                        </div>
+                        <div className={styles.header_separator}></div>
                     </>
                 )}
 
@@ -73,6 +76,8 @@ export default function NavigableMenu({ items, title }: { items: IMenuItem[]; ti
                         onClick={(e) => handleClick(e, item, tail)}
                         href={item.url}
                     >
+                    
+                        <PressEffect/>
                         <span className="flex-grow">{item.name}</span>
                         {item.submenu && <MdArrowForwardIos />}
                     </a>
