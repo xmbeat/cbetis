@@ -19,7 +19,7 @@ export default function EspecialidadesSection() {
                                 image: '/images/banner/1.jpg'
                             }, {
                                 title: '1',
-                                backgroundColor: '#333',
+                                backgroundColor: '#33v3',
                                 url: '#',
                                 description: 'description',
                                 image: '/images/banner/1.jpg'

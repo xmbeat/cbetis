@@ -64,6 +64,7 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
       if (startX != null) {
         if (progress < 0) {
           if (index == 0) {
+            console.log(interpolate(getItemStyle(index), exitStyle, Math.abs(progress)))
             qItem.animate = interpolate(getItemStyle(index), exitStyle, Math.abs(progress))
 
           }
