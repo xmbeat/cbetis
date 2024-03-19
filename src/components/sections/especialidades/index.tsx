@@ -1,79 +1,51 @@
 'use client'
-import AnimatedSlider from "@/components/AnimatedSlider"
+import MotionBaseSlider from "@/components/MotionBaseSlider"
 import AspectRatio from "@/components/aspectRatio"
 import FancySlider from "@/components/fancySlider"
 import MaxWidthContainer from "@/components/maxWidthContainer"
 
 export default function EspecialidadesSection() {
-    return(
-    <section className="students flex justify-center">
-        <MaxWidthContainer className='w-full text-slate-50'>
-            <div className='mt-4 relative'>
-                <h2>Especialidades</h2>
-                <AspectRatio aspect={16/9} >
-                    <AnimatedSlider items={[{
-                        title:'0',
-                        backgroundColor: '#222',
-                        url:'#',
-                        description:'description',
-                        image: '/images/banner/1.jpg'
-                    }, {
-                        title:'1',
-                        backgroundColor: '#333',
-                        url:'#',
-                        description:'description',
-                        image: '/images/banner/1.jpg'
-                    }, {
-                        title:'2',
-                        backgroundColor: '#444',
-                        url:'#',
-                        description:'description',
-                        image: '/images/banner/1.jpg'
-                    }, {
-                        title:'3',
-                        backgroundColor: '#555',
-                        url:'#',
-                        description:'description',
-                        image: '/images/banner/1.jpg'
-                    },{
-                        title:'4',
-                        backgroundColor: '#666',
-                        url:'#',
-                        description:'description',
-                        image: '/images/banner/1.jpg'
-                    }]}
-                    
-                    changeThreshold={0.4}
-                    clickThreshold={0.1}
-                    itemChangeDistance={60}
-                    transitionDuration={4}
-                    entranceStyle={{
-                        y: 200,
-                        x: 300,
-                        width: 60,
-                        height: 60,
-                        backgroundColor: '#aa4444'
-                    }}
-                    exitStyle={{
-                        y: 200,
-                        x: 10,
-                        width: 100,
-                        height: 100,
-                        backgroundColor: '#4444aa'
-                    }}
-                    styles={(index)=>{
-                        return {
-                            x: 0 + index * 60, y: 0, width: 60, height: 60,
-                            backgroundColor: '#222222'
-                        }
-                    }}
-                    onRender={(item, index)=>(<div>item.title</div>)}
-                />
-                    
-                </AspectRatio>
-                
-            </div>
-        </MaxWidthContainer>
-    </section>)
+    return (
+        <section className="students flex justify-center">
+            <MaxWidthContainer className='w-full text-slate-50'>
+                <div className='mt-4 relative'>
+                    <h2>Especialidades</h2>
+                    <AspectRatio aspect={16 / 9} >
+                        <FancySlider items={[{
+                                title: '0',
+                                backgroundColor: '#222',
+                                url: '#',
+                                description: 'description',
+                                image: '/images/banner/1.jpg'
+                            }, {
+                                title: '1',
+                                backgroundColor: '#333',
+                                url: '#',
+                                description: 'description',
+                                image: '/images/banner/1.jpg'
+                            }, {
+                                title: '2',
+                                backgroundColor: '#444',
+                                url: '#',
+                                description: 'description',
+                                image: '/images/banner/1.jpg'
+                            }, {
+                                title: '3',
+                                backgroundColor: '#555',
+                                url: '#',
+                                description: 'description',
+                                image: '/images/banner/1.jpg'
+                            }, {
+                                title: '4',
+                                backgroundColor: '#666',
+                                url: '#',
+                                description: 'description',
+                                image: '/images/banner/1.jpg'
+                            }]}/>
+                    </AspectRatio>
+
+                </div>
+            </MaxWidthContainer>
+        </section>)
 
 }
