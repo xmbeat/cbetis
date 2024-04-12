@@ -18,7 +18,7 @@ export default function Hero() {
     image:'/images/banner/1.jpg'
   }]
   return <section className="w-full bg-slate-500 flex justify-center">
-    <AspectRatio aspect={16 / 9} maxHeight="90vh"  width="100%" >
+    <AspectRatio aspect={16 / 9} maxHeight="80vh"  width="100%" >
         <Slider>
           {items.map((item, index)=>(
             <div key={index} className="w-full h-full relative" style={{backgroundColor:item.backgroundColor??''}}>

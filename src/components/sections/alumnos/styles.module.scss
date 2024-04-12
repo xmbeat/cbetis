@@ -13,10 +13,17 @@
         min-height: 300px;
         max-height: 600px;
         position: relative;
+        overflow: hidden;
+        &:hover{
+            .bgItem{
+                scale: 1.2
+            }
+        }
     }
     .bgItem{
         position: absolute;
         inset: 0;
+        transition: scale 0.3s ease-in-out;
         &::after{
             content: '';
             position: absolute;
@@ -24,6 +31,7 @@
             background-color: #220404af;
         }
     }
+    
     .dataItem{
         position: absolute;
         inset: 0;

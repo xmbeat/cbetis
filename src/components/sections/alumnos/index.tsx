@@ -1,9 +1,10 @@
 'use client'
 import MaxWidthContainer from '@/components/maxWidthContainer'
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, Variant, Variants, motion, useAnimation, useInView } from 'framer-motion';
 import styles from './styles.module.scss'
 import Image from 'next/image';
 import Button from '@/components/Button';
+import { useEffect, useRef } from 'react';
 export default function Students() {
     const items  = [{
         title: 'Nuevo Ingreso',
@@ -23,17 +24,15 @@ export default function Students() {
     }];
     return <section className="students flex justify-center">
         <MaxWidthContainer className='w-full'>
-            <div className='mt-4'>
+            <div className='mt-8'>
                 <h2>Inscripciones</h2>
-                <div className={styles.gridContainer}>
+                <motion.div className={styles.gridContainer}>
                     {items.map((item, index)=>(
-                        <motion.div key={index} className={styles.card}
-                            initial={{y: 100, opacity:0}}
-                            animate={{y: 0, opacity: 1}}
-                            transition={{
-                                duration: 0.4,
-                                delay: 0.3 * index
-                            }}
+                        <motion.div key={index} 
+                            className={styles.card}
+                            initial={{y:'100%', opacity: 0}}
+                            whileInView={{y: '0%', opacity: 1, transition:{duration: 0.5, delay: index * 0.3}}}
+                            viewport={{margin: '100px', once: true}}
                         >
                             <div className={styles.bgItem}>
                                 <Image sizes="(max-width: 768px) 200px, 30vw"src={item.image} fill={true} style={{objectFit: 'cover'}} alt={item.title} priority={true} />
@@ -45,7 +44,7 @@ export default function Students() {
                             </div>
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </MaxWidthContainer>
     </section>

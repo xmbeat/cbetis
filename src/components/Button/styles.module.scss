@@ -8,6 +8,7 @@
     text-transform: uppercase;
     transition: background-color 0.1s ease-in-out;
     box-shadow: 1px 1px 5px #00000063;
+    position: relative;
     &:hover{
         background-color: var(--btn-hover-bg);
     }

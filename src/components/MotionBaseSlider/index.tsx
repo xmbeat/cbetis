@@ -13,12 +13,12 @@ interface IAnimatedSliderProps {
   items: Item[],
   exitStyle: {},
   entranceStyle: {},
-  itemStyles: {}[] | ((index:number)=>{}),
+  itemStyles: {}[] | ((index:number, sizeCanvas:{width: number, height:number})=>{}),
   transitionDuration: number
   changeThreshold: number,
   clickThreshold:number,
   changeDistance: number,
-  itemRenderer: (item:any, index:number)=>ReactNode
+  itemRenderer: (item:any, index:number, sizeCanvas:{width:number, height:number}, progress:number)=>ReactNode
 }
 
 interface IQueueItem {
@@ -36,15 +36,16 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
   const [startX, setStartX] = useState<number | null>(null)
   const [progress, setProgress] = useState<number>(0);
   const [itemMD, setItemMD] = useState<Item | null>(null)
-
+  const [size, setSize] = useState({width: 0, height:0})
+  
   const getItemStyle = useCallback((index:number)=>{
     if (typeof itemStyles == 'function'){
-      return itemStyles(index)
+      return itemStyles(index, size)
     }
     else{
       return itemStyles[index]
     }
-  }, [itemStyles])
+  }, [itemStyles, size])
 
 
   const [queue, setQueue] = useState<IQueueItem[]>(items.map((item, index) => ({
@@ -55,7 +56,7 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
     ref: createRef<HTMLDivElement>()
   })))
 
-
+  //TODO: Obtener valores numericos de los estilos para que la funcion interpolate solo interpole numeros, realizar operaciones como calc antes
   const queueProps = useMemo(() => {
     const duration = progress < 0 ? transitionDuration * (-progress) : transitionDuration * progress
 
@@ -64,21 +65,20 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
       if (startX != null) {
         if (progress < 0) {
           if (index == 0) {
-            console.log(interpolate(getItemStyle(index), exitStyle, Math.abs(progress)))
-            qItem.animate = interpolate(getItemStyle(index), exitStyle, Math.abs(progress))
+            qItem.animate = interpolate(getItemStyle(index), exitStyle, Math.abs(progress), size)
 
           }
           else {
-            qItem.animate = interpolate(getItemStyle(index), getItemStyle(index - 1), Math.abs(progress))
+            qItem.animate = interpolate(getItemStyle(index), getItemStyle(index - 1), Math.abs(progress), size)
 
           }
         }
         else {
           if (index == queue.length - 1) {
-            qItem.animate = interpolate(getItemStyle(index), entranceStyle, Math.abs(progress))
+            qItem.animate = interpolate(getItemStyle(index), entranceStyle, Math.abs(progress), size)
           }
           else {
-            qItem.animate = interpolate(getItemStyle(index), getItemStyle(index + 1), Math.abs(progress))
+            qItem.animate = interpolate(getItemStyle(index), getItemStyle(index + 1), Math.abs(progress), size)
           }
         }
         qItem.initial = qItem.animate
@@ -96,13 +96,13 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
       if (index == queue.length - 1) {
         qItem.exit = { ...entranceStyle, transition: { duration: transitionDuration - duration } }
         if (containerRef.current){
-          qItem.initial = { ...interpolate(entranceStyle, getItemStyle(queue.length - 1), Math.abs(progress)) }
+          qItem.initial = { ...interpolate(entranceStyle, getItemStyle(queue.length - 1), Math.abs(progress), size) }
         }
       }
       else if (index == 0) {
         qItem.exit = { ...exitStyle, transition: { duration: transitionDuration - duration } }
         if (containerRef.current){
-          qItem.initial = { ...interpolate(exitStyle, getItemStyle(0), Math.abs(progress)) }
+          qItem.initial = { ...interpolate(exitStyle, getItemStyle(0), Math.abs(progress), size) }
         }
       }
       return qItem
@@ -119,12 +119,12 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
 
 
     if (progress > 0) {
-      qItemExit.initial = interpolate(getItemStyle(0), exitStyle, 1 - progress)
+      qItemExit.initial = interpolate(getItemStyle(0), exitStyle, 1 - progress, size)
       qItemExit.animate = qItemExit.initial
       qItemExit.animate.transition = { duration: startX ? 0 : duration }
     }
     else if (progress < 0) {
-      qItemEntrance.initial = interpolate(getItemStyle(queue.length - 1), entranceStyle, 1 + progress)
+      qItemEntrance.initial = interpolate(getItemStyle(queue.length - 1), entranceStyle, 1 + progress, size)
       qItemEntrance.animate = qItemEntrance.initial
       qItemEntrance.animate.transition = { duration: startX ? 0 : duration }
     }
@@ -155,7 +155,7 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
       itemExit: qItemExit,
       itemEntrance: qItemEntrance
     }
-  }, [progress, transitionDuration, queue, startX, getItemStyle, exitStyle, entranceStyle, changeThreshold, clickThreshold])
+  }, [progress, transitionDuration, queue, startX, getItemStyle, exitStyle, size, entranceStyle, changeThreshold, clickThreshold])
 
 
   const handleMouseDown = useCallback((ev: any) => {
@@ -244,6 +244,24 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
     setStartX(null);
   }, [changeThreshold, clickThreshold, itemMD, progress, queue, shiftQueue])
 
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        const { width, height } = entry.contentRect;
+        setSize({
+          height, width
+        })
+      }
+    });
+
+    resizeObserver.observe(container);
+    return () => {
+      resizeObserver.unobserve(container);
+    };
+  }, []);
 
   useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove)
@@ -257,12 +275,9 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
 
 
 
-  return <div ref={containerRef} className="w-full h-full relative text-white"
+  return <div ref={containerRef} className="w-full h-full relative" draggable="false"
     onMouseDown={handleMouseDown}
   >
-    <div className="text-black">
-      {`progress:${progress} `}
-    </div>
     <AnimatePresence>
       {queueProps.itemExit.exit &&
         <motion.div
@@ -274,7 +289,7 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
           exit={queueProps.itemExit.exit}
         >
           
-          {itemRenderer(queueProps.itemExit.item, -1)}
+          {itemRenderer(queueProps.itemExit.item, -1, size,  startX?progress:0)}
         </motion.div>
       }
     </AnimatePresence>
@@ -290,7 +305,7 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
           animate={qItem.animate}
           exit={qItem.exit}
         >
-          {itemRenderer(qItem.item, index)}
+          {itemRenderer(qItem.item, index, size, startX?progress:0)}
 
         </motion.div>
 
@@ -306,7 +321,7 @@ export default function MotionBaseSlider({ items = [], exitStyle, entranceStyle,
           animate={queueProps.itemEntrance.animate}
           exit={queueProps.itemEntrance.exit}
         >
-          {itemRenderer(queueProps.itemEntrance.item, queue.length )}
+          {itemRenderer(queueProps.itemEntrance.item, queue.length, size,  startX?progress:0)}
         </motion.div>
       }
     </AnimatePresence>
